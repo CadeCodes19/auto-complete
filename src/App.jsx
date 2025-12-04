@@ -1,20 +1,8 @@
 import { useState, useEffect, useMemo } from 'react'
 import Trie from './Trie'
+import words from './words.json'
 
-const SAMPLE_WORDS = [
-  "apple", "apricot", "application", "banana", "band", "bandana", "cat", "caterpillar", "cattle",
-  "dog", "dolphin", "door", "elephant", "elevator", "eleven", "fish", "fisherman", "fist",
-  "grape", "graph", "graphic", "hat", "hatch", "hate", "ice", "iceberg", "icicle",
-  "juice", "jump", "jungle", "kite", "kitten", "kitchen", "lemon", "lemonade", "lemur",
-  "monkey", "money", "monitor", "nose", "note", "notebook", "orange", "orbit", "organ",
-  "pencil", "penguin", "penny", "queen", "quest", "question", "rabbit", "race", "racket",
-  "sun", "sunny", "sunset", "tiger", "ticket", "title", "umbrella", "umpire", "uncle",
-  "van", "vanilla", "vanish", "water", "watch", "watermelon", "xylophone", "x-ray",
-  "yellow", "yell", "year", "zebra", "zero", "zone", "antigravity", "ant", "anti",
-  "ball", "base", "basket", "call", "camera", "camp", "dance", "danger", "dark",
-  "eagle", "ear", "early", "fan", "fancy", "fantastic", "garden", "garlic", "gas",
-  "happy", "harbor", "hard", "igloo", "ignite", "ignore", "jacket", "jade", "jail"
-];
+
 
 function App() {
   const [trie] = useState(new Trie());
@@ -25,7 +13,7 @@ function App() {
 
   // Initialize Trie with sample words
   useEffect(() => {
-    SAMPLE_WORDS.forEach(word => trie.insert(word));
+    words.forEach(word => trie.insert(word));
   }, [trie]);
 
   const handleInsert = (e) => {
