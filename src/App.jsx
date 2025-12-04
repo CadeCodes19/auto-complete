@@ -10,6 +10,7 @@ function App() {
   const [searchValue, setSearchValue] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
+  const [deleteValue, setDeleteValue] = useState('');
 
   // Initialize Trie with sample words
   useEffect(() => {
@@ -27,6 +28,18 @@ function App() {
       }
     }
   };
+
+const handleDelete = (e) => {
+  e.preventDefault();
+  if (deleteValue.trim()) {
+    trie.delete(deleteValue.trim());
+    setDeleteValue('');
+    if (searchValue) {
+      setSuggestions(trie.search(searchValue));
+    }
+  }
+};
+
 
   const handleSearchChange = (e) => {
     const value = e.target.value;
@@ -125,6 +138,30 @@ function App() {
             </div>
           </form>
         </div>
+
+        <div className="bg-slate-800/50 backdrop-blur-sm p-6 rounded-2xl border border-slate-700/50 shadow-xl mt-4">
+          <form onSubmit={handleDelete} className="space-y-4">
+            <label className="block text-sm font-semibold text-slate-300 ml-1">
+              Delete Word
+            </label>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={deleteValue}
+                onChange={(e) => setDeleteValue(e.target.value)}
+                placeholder="e.g. 'microservice'"
+                className="flex-1 bg-slate-900/80 border border-slate-600 rounded-xl px-4 py-3 text-slate-200 placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all duration-200"
+              />
+              <button
+                type="submit"
+                className="bg-rose-500 hover:bg-rose-400 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 shadow-lg shadow-red-500/20 active:scale-95 cursor-pointer"
+              >
+                Delete
+              </button>
+            </div>
+          </form>
+        </div>
+
 
       </div>
     </div>
