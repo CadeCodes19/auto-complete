@@ -13,7 +13,7 @@ class Trie {
   insert(word) {
     let node = this.root;
     for (let char of word.toLowerCase()) {
-      if (!node.children[char]) {
+      if (node.children[char] == null) {
         node.children[char] = new TrieNode();
       }
       node = node.children[char];
@@ -29,31 +29,32 @@ class Trie {
       }
       node = node.children[char];
     }
-    
+
     const results = [];
     this._findAllWords(node, prefix.toLowerCase(), results);
     return results;
   }
 
   delete(word) {
-  const deleteRecursively = (node, word, depth) => {
-    if (!node) return false;
+    const deleteRecursively = (node, word, depth) => {
+      if (!node) return false;
 
-    if (depth === word.length) {
-      if (!node.isEndOfWord) return false;
-      node.isEndOfWord = false;
-      return Object.keys(node.children).length === 0;
-    }
+      if (depth === word.length) {
+        if (!node.isEndOfWord) return false;
+        node.isEndOfWord = false;
+        return Object.keys(node.children).length === 0;
+      }
 
-    const char = word[depth];
-    if (!deleteRecursively(node.children[char], word, depth + 1)) return false;
+      const char = word[depth];
+      if (!deleteRecursively(node.children[char], word, depth + 1))
+        return false;
 
-    delete node.children[char];
-    return Object.keys(node.children).length === 0 && !node.isEndOfWord;
-  };
+      delete node.children[char];
+      return Object.keys(node.children).length === 0 && !node.isEndOfWord;
+    };
 
-  deleteRecursively(this.root, word.toLowerCase(), 0);
-}
+    deleteRecursively(this.root, word.toLowerCase(), 0);
+  }
 
   _findAllWords(node, currentPrefix, results) {
     if (results.length >= 5) return; // Limit to 5 suggestions
